@@ -15,10 +15,15 @@ var config = {
     contentBase: path.resolve(__dirname)
   },
   module: {
-      loaders: [
+      rules: [
           {
               test: /\.js$/,
               loader: 'babel-loader',
+              exclude: 'node_modules/'
+          },
+          {
+              test: /\.scss$/,
+              loader: ['style-loader', 'css-loader', 'sass-loader'],
               exclude: 'node_modules/'
           }
       ]
