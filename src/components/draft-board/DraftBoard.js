@@ -2,7 +2,7 @@ import React from 'react';
 
 import './DraftBoard.scss';
 
-export class FilterableDraftBoard extends React.Component {
+export class DraftBoardContainer extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,32 +14,30 @@ export class FilterableDraftBoard extends React.Component {
         this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
     }
 
-    handleFilterByChange(filter) {
-        console.log(filter);
+    handleFilterByChange(e) {
         this.setState({
-            filterBy: filter
+            filterBy: e.target.value
         });
     }
 
-    handleFilterTextChange(text) {
-        console.log(text);
+    handleFilterTextChange(e) {
         this.setState({
-            filterText: text
-        }); 
+            filterText: e.target.value
+        });
     }
 
     render() {
         return (
             <div>
                 <SearchBar
-                    filterText={this.state.filterText} 
+                    filterText={this.state.filterText}
                     filterBy={this.state.filterBy}
                     handleFilterByChange={this.handleFilterByChange}
                     handleFilterTextChange={this.handleFilterTextChange}
                 />
-                <DraftBoard 
-                    players={this.props.players} 
-                    filterText={this.state.filterText} 
+                <DraftBoard
+                    players={this.props.players}
+                    filterText={this.state.filterText}
                     filterBy={this.state.filterBy}
                 />
             </div>
@@ -47,76 +45,52 @@ export class FilterableDraftBoard extends React.Component {
     }
 }
 
-class DraftBoard extends React.Component {
-
-    render() {
-
-        const rows = this.props.players.filter(player => {
-            return player[this.props.filterBy].toLowerCase().indexOf(this.props.filterText.toLowerCase()) !== -1;
-        })
+function DraftBoard(props) {
+    
+    const rows = props.players.filter(player => {
+        return player[props.filterBy].toLowerCase().includes(props.filterText.toLowerCase());
+    })
         .map((player, idx) => {
-            return <PlayerRow key={idx} playerData={player}/>
+            return <PlayerRow key={idx} playerData={player} />
         });
 
-        return (
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>School</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
-        );
-    }
-}
+    return (
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>School</th>
+                </tr>
+            </thead>
+            <tbody>
+                {rows}
+            </tbody>
+        </table>
+    );
+};
 
-class PlayerRow extends React.Component {
-    render() {
+function PlayerRow (props) {
+    const { name, position, school } = props.playerData;
 
-        const { name, position, school } = this.props.playerData;
+    return (
+        <tr>
+            <td>{name}</td>
+            <td>{position}</td>
+            <td>{school}</td>
+        </tr>
+    );
+};
 
-        return (
-            <tr>
-                <td>{name}</td>
-                <td>{position}</td>
-                <td>{school}</td>
-            </tr>
-        );
-    }
-}
-
-class SearchBar extends React.Component {
-
-    constructor(props) {
-        super(props);
-        console.log(this.props);
-        this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
-        this.handleFilterByChange = this.handleFilterByChange.bind(this);
-    }
-
-    handleFilterTextChange(e) {
-        this.props.handleFilterTextChange(e.target.value);
-    }
-
-    handleFilterByChange(e) {
-        this.props.handleFilterByChange(e.target.value);
-    }
-
-    render() {
-        return (
-            <form>
-                <input type="text" placeholder="Search..." value={this.props.filterText} onChange={this.handleFilterTextChange}/>
-                <select name="filterBy" value={this.props.filterBy} onChange={this.handleFilterByChange}>
-                    <option value="name">Name</option>
-                    <option value="position">Position</option>
-                    <option value="school">School</option>
-                </select>
-            </form>
-        );
-    }
-}
+function SearchBar(props) {
+    return (
+        <form>
+            <input type="text" placeholder="Search..." value={props.filterText} onChange={props.handleFilterTextChange} />
+            <select name="filterBy" value={props.filterBy} onChange={props.handleFilterByChange}>
+                <option value="name">Name</option>
+                <option value="position">Position</option>
+                <option value="school">School</option>
+            </select>
+        </form>
+    );
+};

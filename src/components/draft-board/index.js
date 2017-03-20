@@ -1,1 +1,1 @@
-export { FilterableDraftBoard } from './DraftBoard';
+export { DraftBoardContainer } from './DraftBoard';

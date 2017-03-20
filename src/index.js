@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { FilterableDraftBoard } from './components/draft-board';
+import { DraftBoardContainer } from './components/draft-board';
 import './scss/styles.scss';
 
 const PLAYERS = [
@@ -28,7 +28,7 @@ const PLAYERS = [
 class MockDraft extends React.Component {
     render() {
         return (
-            <FilterableDraftBoard players={ PLAYERS }/>
+            <DraftBoardContainer players={ PLAYERS }/>
         );
     }
 }
