@@ -1,11 +1,33 @@
+form {
+
+    width: 80%;
+    margin: 15px auto;
+
+    input[type="text"] {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
 table {
     border-collapse: collapse;
+    width: 80%;
+    margin: auto;
+
+    th {
+        font-weight: normal;
+    }
+
+    td, th {
+        border: none;
+        text-align: left;
+        padding: 5px;
+    }
+
+    tr {
+        border: 1px solid black;
+    }
 }
 
 $black: black;
 
-td, th {
-    border: 1px solid $black;
-    text-align: left;
-    padding: 5px;
-}
