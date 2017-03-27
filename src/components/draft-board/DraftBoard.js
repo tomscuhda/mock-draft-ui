@@ -22,7 +22,14 @@ export class DraftBoardContainer extends React.Component {
             forty: 'Speed',
             school: 'School'
         }
+
         this.sortType = '';
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+           players: nextProps.players 
+        });
     }
 
     handleFilterByChange(e) {
@@ -41,7 +48,7 @@ export class DraftBoardContainer extends React.Component {
 
     filterPlayers(searchText, filterBy) {
         return this.props.players.filter(player => {
-            return player[filterBy].toLowerCase().includes(searchText.toLowerCase());
+            return player[filterBy].toLowerCase().includes(searchText.trim().replace(/\s+/g, ' ').toLowerCase());
         });
     }
 
